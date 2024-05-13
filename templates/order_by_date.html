@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block main %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+</head>
+<p>{{ user.id }}'s order on {{ date }}. </p>
+
+{% if message %}
+    <p>No orders avaliable</p>
+{% endif %}
+
+{% if orders %}
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>UPC</th>
+            <th>Item</th>
+            <th>Paid</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.date }}</td>
+            <td class="expand">{{ order.upc }}</td>
+            <td>{{ order.item }}</td>
+            <td>${{ "%.2f"|format(order.paid)  }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>{{ message }}</p>
+{% endif %}
+
+
+
+<button type="button" class="button" onclick="simple_action('{{ url_for('users_signout') }}')">Sign Out</button>&nbsp;&nbsp;
+<script type="text/javascript">
+    function simple_action(target) {
+        window.location = target;
+    }
+
+    function confirmed_action(target) {
+        if (confirm('Are you sure?')) {
+            window.location = target;
+        }
+    }
+</script>
+{% endblock %}

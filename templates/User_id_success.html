@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block main %}
+    <p>Your User ID, {{ user.id }}, was successfully made. Click continue, to go back to login page</p>
+    <button type="button" class="button" onclick=simple_action("{{ url_for('index') }}")>Continue</button>
+    
+    <script type="text/javascript">
+    function simple_action(target) {
+        window.location = target;
+    }
+
+    function confirmed_action(target) {
+        if (confirm('Are you sure?')) {
+            window.location = target;
+        }
+    }
+</script>
+{% endblock %}

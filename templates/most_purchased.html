@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block main %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+</head>
+
+<p>{{ user.id }}'s most purchased items.</p>
+<table>
+    <tr>
+        <th>UPC</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+       
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item['upc'] }}</td>
+        <td>{{ item['name'] }}</td>
+        <td>${{ item['total_price']}}</td>
+        <td>{{ item['times_purchased'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<button type="button" class="button" onclick="simple_action('{{ url_for('orders') }}')">Back to Orders</button>&nbsp;&nbsp;
+<script type="text/javascript">
+    function simple_action(target) {
+        window.location = target;
+    }
+
+    function confirmed_action(target) {
+        if (confirm('Are you sure?')) {
+            window.location = target;
+        }
+    }
+</script>
+
+{% endblock %}

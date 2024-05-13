@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block main %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+</head>
+<p>{{ user.id }}'s Orders. This is your customer ID linked to your Square account, {{user.customer_id}}</p>
+
+{% if message %}
+    <p>No orders available</p>
+{% endif %}
+
+{% if order_data %}
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+        </tr>
+        {% for order in order_data %}
+            <tr>
+                <td class="text"> <a href="{{ url_for('order', id=order['order_id']) }}">{{ order['order_id'] }}</a></td>
+                <td> {{ order['created_at'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No orders available</p>
+{% endif %}
+
+<button type="button" class="button" onclick="simple_action('{{ url_for('users_signout') }}')">Sign Out</button>&nbsp;&nbsp;
+<button type="button" class="button" onclick="simple_action('{{ url_for('total_price_per_month') }}')">Monthly Spending</button>&nbsp;&nbsp;
+<button type="button" class="button" onclick="simple_action('{{ url_for('most_purchased') }}')">Most Purchased</button>&nbsp;&nbsp;
+<button type="button" class="button" onclick="simple_action('{{ url_for('most_expensive') }}')">Most Expensive</button>&nbsp;&nbsp;
+
+
+
+
+<script type="text/javascript">
+    function simple_action(target) {
+        window.location = target;
+    }
+
+    function confirmed_action(target) {
+        if (confirm('Are you sure?')) {
+            window.location = target;
+        }
+    }
+</script>
+{% endblock %}

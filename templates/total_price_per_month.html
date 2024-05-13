@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<table border="1">
+    <tr>
+        <th>Month</th>
+        <th>Amount Spent</th>
+    </tr>
+    {% for month, amount in monthly_spending_data.items() %}
+        <tr>
+            <td>{{ month[5:7] }}/{{ month[2:4] }}</td>
+            <td>${{ amount/100 }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<p>This graph shows the amount of money you spent for your orders each month</p>
+<img src='data:image/png;base64,{{ monthly_plot }}'/>
+
+<button type="button" class="button" onclick="simple_action('{{ url_for('orders') }}')">Back to Orders</button>&nbsp;&nbsp;
+
+<script type="text/javascript">
+    function simple_action(target) {
+        window.location = target;
+    }
+
+    function confirmed_action(target) {
+        if (confirm('Are you sure?')) {
+            window.location = target;
+        }
+    }
+</script>
+
+{% endblock %}
